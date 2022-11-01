@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-asr <moel-asr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/27 16:26:01 by moel-asr          #+#    #+#             */
-/*   Updated: 2022/11/01 18:19:25 by moel-asr         ###   ########.fr       */
+/*   Created: 2022/11/01 14:57:03 by moel-asr          #+#    #+#             */
+/*   Updated: 2022/11/01 18:28:21 by moel-asr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_free(char *s1, char *s2)
 {
@@ -95,15 +95,15 @@ char	*ft_get_next_line(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*str;
+	static char	*str[OPEN_MAX];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	str = ft_read(fd, str);
-	if (!str)
+	str[fd] = ft_read(fd, str[fd]);
+	if (!str[fd])
 		return (NULL);
-	line = ft_get_line(str);
-	str = ft_get_next_line(str);
+	line = ft_get_line(str[fd]);
+	str[fd] = ft_get_next_line(str[fd]);
 	return (line);
 }
